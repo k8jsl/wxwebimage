@@ -1,0 +1,16 @@
+lllon=-96.40
+lllat=23.25
+
+urlon=-65.0
+urlat=39.25
+
+cm=-95
+sp1=25
+sp2=25
+rlat=36.5
+width=800
+height=600
+projection=lambert
+statesf=fl,ga,al,ms,la,ar,mo,ky,tn,sc,nc,va
+statesp=tx,ok,ks,ne,ia,il,in,oh,pa,wv,md
+water=gm,an,am

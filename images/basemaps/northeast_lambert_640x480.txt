@@ -1,0 +1,13 @@
+lllon=-88.65
+lllat=38.25
+
+urlon=-64.0
+urlat=48.15
+
+cm=-95
+sp1=25
+sp2=25
+rlat=36.5
+width=640
+height=480
+projection=lambert

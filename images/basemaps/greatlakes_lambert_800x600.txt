@@ -1,0 +1,17 @@
+lllon=-98.37
+lllat=37.89
+
+urlon=-73.13
+urlat=49.66
+
+cm=-95
+sp1=25
+sp2=25
+rlat=36.5
+width=800
+height=600
+projection=lambert
+
+statesf=mi,il,in,oh,pa,wv,wi,ia,mn
+statesp=mo,ky,ks,ne,va,ny,md,nj,sd,nd
+water=lm,lh,lo,ls,le

@@ -1,0 +1,18 @@
+lllat=18.1936
+lllon=-122.5592
+
+urlat=53.4372
+urlon=-60.8766
+
+
+sp1=0
+sp2=39
+cm=-95.5
+rlat=36.5
+width=800
+height=600
+projection=lambert
+
+
+;proj     = lcc/39;-95.5;0/0;0;0;0
+;garea    = 18.1936;-122.5592;53.4372;-60.8766
