@@ -1,7 +1,7 @@
 <?php
 
 /**
-   * // <!-- phpDesigner :: Timestamp -->2/24/2013 17:41:14<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/10/2013 12:14:38<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -24,7 +24,7 @@ Class ImageTemplate extends WxWebAPI{
 
     var $template = '';
     var $image = '';
-    var $VERSION = "WxWeb::ImageAPI -> ImageTemplate 2.01";
+    var $VERSION = "WxWeb::ImageAPI -> ImageTemplate 2.02";
     var $commands = array(
     'NEWIMAGE' => 'new_image',
     'TEXT' => 'do_text',
@@ -107,12 +107,12 @@ Class ImageTemplate extends WxWebAPI{
               }
               elseif ($line == 'SAVEIMAGE')
               {
-                $this->image = $this->do_save($this->image,$line);
+                $this->image = self::do_save($this->image,$line);
               }
               
               elseif ($line == 'REDIRECT')
               {
-                $this->image = $this->do_redirect($this->image,$line);
+                $this->image = self::do_redirect($this->image,$line);
               }
             
              
@@ -129,12 +129,13 @@ Class ImageTemplate extends WxWebAPI{
     $line = preg_replace("/NEWIMAGE\:/" , "" , $line);
     list($x,$y,$hex) = explode("|" , $line);
     
-    list($r,$g,$b) = $this->tools->getRGB($hex);
+    
     
        
     $image = imagecreatetruecolor($x,$y);
     
-    $bg = imagecolorallocate($image,$r,$g,$b);
+    $bg = $this->tools->color($image,$hex);
+      
     
     imagefilledrectangle($image,0,0,imagesx($image),imagesy($image),$bg);
     
@@ -208,10 +209,9 @@ Class ImageTemplate extends WxWebAPI{
         if ($this->debug) echo "X $x, Y $y, PX $px, PY $py\n";
         
         
-        list($r,$g,$b) = $this->tools->getRGB($hex);
+        $color = $this->tools->color($image,$hex);
         
-        $color = imagecolorallocate($image,$r,$g,$b);
-        
+                
         if (is_numeric($fill))
         {
             imagesetthickness($image,$fill);
@@ -426,7 +426,7 @@ Class ImageTemplate extends WxWebAPI{
         $this->mapplot = $this->projection->map_proj($maparray);
         
         $line = "IMAGE:0|0|" . $line;
-        $image = $this->insert_image($image,$line);
+        $image = self::insert_image($image,$line);
         return $image;
     }
     

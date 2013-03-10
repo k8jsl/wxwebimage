@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->2/24/2013 17:39:47<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/12/2013 13:02:29<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -15,7 +15,7 @@
 
   class Legend
   {
-  			var $VERSION = "WxWeb Image Legend.php 3.55<br />";
+  			var $VERSION = "WxWeb Image Legend.php 3.57<br />";
 
   			function __construct($debug, $form, $conf, $tools)
   			{
@@ -69,14 +69,14 @@
   						$fontcolor = (isset($legendcfg['font_color'])) ? $legendcfg['font_color'] : 'FFFFFF';
 
   						$legendbg_h = (isset($legendcfg['legendbg_h'])) ? $legendcfg['legendbg_h'] : '55';
-  						$legendy = (isset($legendcfg['legend_y'])) ? $legendcfg['legend_y'] : '40';
+  						$legend_y = (isset($legendcfg['legend_y'])) ? $legendcfg['legend_y'] : '40';
   						$legendcolorsa = (isset($legendcfg['legend_colorsa'])) ? $legendcfg['legend_colorsa'] : '';
   						$legendlabelsa = (isset($legendcfg['legend_labelsa'])) ? $legendcfg['legend_labelsa'] : '';
 
   						$legendcolorsb = (isset($legendcfg['legend_colorsb'])) ? $legendcfg['legend_colorsb'] : '';
   						$legendlabelsb = (isset($legendcfg['legend_labelsb'])) ? $legendcfg['legend_labelsb'] : '';
 
-  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$black = $this->tools->color($image,'000000');
 
 
   						/**
@@ -127,19 +127,13 @@
   									print "and the winner is $legendw\n";
 
 
-  						$legendimage = imagecreatetruecolor($legendw, 45);
+                        $legendstart = round(imagesx($image) * .5) - round($legendw * .5);
 
-  						$black = imagecolorallocate($legendimage, 0, 0, 0);
+  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$image = $this->legend_bg2($image, $black, $legendbg_h);
 
-
-  						$fill = imagecolorallocate($legendimage, 25, 25, 25);
-
-  						imagefilledrectangle($legendimage, 0, 0, imagesx($legendimage), imagesy($legendimage), $fill);
-
-  						imagecolortransparent($legendimage, $fill);
-
-  						list($r, $g, $b) = $this->tools->getRGB($fontcolor);
-  						$fontc = imagecolorallocate($legendimage, $r, $g, $b);
+  						$fontc = $this->tools->color($image,$fontcolor);
+  						
   						error_reporting(0);
 
   						/** BEGIN LEGEND TOP **/
@@ -154,8 +148,8 @@
 
   									$ffontw[$y] = $fontw + 10;
 
-  									list($r, $g, $bl) = $this->tools->getRGB($legendcolorsa[$x]);
-  									$fillcolor = imagecolorallocate($legendimage, $r, $g, $bl);
+  									$fillcolor = $this->tools->color($image,$legendcolorsa[$x]);
+  									
 
   									
 
@@ -163,11 +157,11 @@
   												
   												if (!empty($label))
   												{
-  															imagefilledrectangle($legendimage, $cc + 10, 5, $cc + 10 + 12, 16, $black);
-  															imagefilledrectangle($legendimage, $cc + 11, 6, $cc + 11 + 10, 15, $fillcolor);
+  															imagefilledrectangle($image, $cc + 10 + $legendstart, 5 + $legend_y, $cc + $legendstart + 10 + 12, 16 + $legend_y, $black);
+  															imagefilledrectangle($image, $cc + 11 + $legendstart, 6 + $legend_y, $cc + $legendstart + 11 + 10, 15 + $legend_y, $fillcolor);
 
-  															imagettftext($legendimage, $fontsize, 0, $cc + 11 + 12 + 5, 16, $black, $fontpath . $font, $label);
-  															imagettftext($legendimage, $fontsize, 0, $cc + 10 + 11 + 5, 15, $fontc, $fontpath . $font, $label);
+  															imagettftext($image, $fontsize, 0, $cc + $legendstart + 11 + 12 + 5, 16 + $legend_y, $black, $fontpath . $font, $label);
+  															imagettftext($image, $fontsize, 0, $cc + $legendstart + 10 + 11 + 5, 15 + $legend_y, $fontc, $fontpath . $font, $label);
   												}
   									
 
@@ -192,17 +186,16 @@
                                     
                                     
 
-  									list($r, $g, $bl) = $this->tools->getRGB($legendcolorsb[$x]);
-  									$fillcolor = imagecolorallocate($legendimage, $r, $g, $bl);
+  									$fillcolor = $this->tools->color($image,$legendcolorsb[$x]);
 
   													
   												if (!empty($label))
   												{
-  															imagefilledrectangle($legendimage, $cc + 10, 20, $cc + 10 + 12, 31, $black);
-  															imagefilledrectangle($legendimage, $cc + 11, 21, $cc + 11 + 10, 30, $fillcolor);
+  															imagefilledrectangle($image, $cc + 10 + $legendstart, 20 + $legend_y, $cc + $legendstart + 10 + 12, 31 + $legend_y, $black);
+  															imagefilledrectangle($image, $cc + 11 + $legendstart, 21 + $legend_y, $cc + $legendstart + 11 + 10, 30 + $legend_y, $fillcolor);
 
-  															imagettftext($legendimage, $fontsize, 0, $cc + 11 + 12 + 5, 31, $black, $fontpath . $font, $label);
-  															imagettftext($legendimage, $fontsize, 0, $cc + 10 + 11 + 5, 30, $fontc, $fontpath . $font, $label);
+  															imagettftext($image, $fontsize, 0, $cc + $legendstart + 11 + 12 + 5, 31 + $legend_y, $black, $fontpath . $font, $label);
+  															imagettftext($image, $fontsize, 0, $cc + $legendstart + 10 + 11 + 5, 30 + $legend_y, $fontc, $fontpath . $font, $label);
   												}
   									
 
@@ -213,17 +206,7 @@
   						}
 
 
-  						$mapc = imagesx($image) * .5;
-  						$legc = imagesx($legendimage) * .5;
-
-  						$place = round($mapc) - round($legc) + 20;
-  						if ($this->debug)
-  									print "place $place mapc $mapc legc $legc\n";
-
-  						$black = imagecolorallocate($image, 0, 0, 0);
-  						$image = $this->legend_bg2($image, $black, $legendbg_h);
-  						imagecopymerge($image, $legendimage, $place, $legendy, 0, 0, imagesx($legendimage), imagesy($legendimage), 100);
-
+  						
   						return $image;
 
 
@@ -245,10 +228,11 @@
   						$fontcolor = (isset($legendcfg['font_color'])) ? $legendcfg['font_color'] : 'FFFFFF';
 
   						$legendbg_h = (isset($legendcfg['legendbg_h'])) ? $legendcfg['legendbg_h'] : '55';
-  						$legendy = (isset($legendcfg['legend_y'])) ? $legendcfg['legend_y'] : '40';
+  						$legend_y = (isset($legendcfg['legend_y'])) ? $legendcfg['legend_y'] : '40';
   						$labels = (isset($legendcfg['legend_labels'])) ? $legendcfg['legend_labels'] : '';
 
   						$black = imagecolorallocate($image, 0, 0, 0);
+  						$image = $this->legend_bg2($image, $black, $legendbg_h);
 
   						if ($this->debug)
   						{
@@ -296,25 +280,19 @@
   						$ablocksw = ($atotal * 10) * 3;
   						$afontwt = $atotal * $afontw;
   						$legendw = $afontwt + $ablocksw;
+                        $legendcenter = round($legendw * .5);
+                        $legendstart = round(imagesx($image) * .5) - $legendcenter;
 
   						if ($this->debug)
-  									echo "top legend width $legendw $afontw\n";
+  									echo "top legend width $legendw $afontw $legendstart\n";
 
 
-  						$legendimage = imagecreatetruecolor($legendw, 45);
+ 		
 
-  						$black = imagecolorallocate($legendimage, 0, 0, 0);
+  						
 
-
-  						$fill = imagecolorallocate($legendimage, 25, 25, 25);
-
-  						imagefilledrectangle($legendimage, 0, 0, imagesx($legendimage), imagesy($legendimage), $fill);
-
-  						imagecolortransparent($legendimage, $fill);
-
-  						list($r, $g, $b) = $this->tools->getRGB($fontcolor);
-  						$fontc = imagecolorallocate($legendimage, $r, $g, $b);
-  						//error_reporting(0);
+  						$fontc = $this->tools->color($image,$fontcolor);
+  						
 
   						/** BEGIN LEGEND TOP **/
 
@@ -327,46 +305,28 @@
 
   									$ffontw[$y] = $afontw + 10;
 
-  									list($r, $g, $bl) = $this->tools->getRGB($legendcolors[$x]);
-  									$fillcolor = imagecolorallocate($legendimage, $r, $g, $bl);
+  									$fillcolor = $this->tools->color($image,$legendcolors[$x]);
+  									
 
-  									if ($x == 0)
-  									{
+  							
+  												
+  												$cc = $cc + $ffontw[$y] + 12;
 
+  												imagefilledrectangle($image, $cc + 10 + $legendstart, 5 +$legend_y, $cc + 10 + 12 + $legendstart, 16 +$legend_y, $black);
+  												imagefilledrectangle($image, $cc + 11 + $legendstart , 6 +$legend_y, $cc + 11 + 10 + $legendstart, 15 +$legend_y, $fillcolor);
 
-  												imagefilledrectangle($legendimage, $x * $ffontw[$y] + 10, 5, $x * $ffontw[$y] + 10 + 12, 16, $black);
-  												imagefilledrectangle($legendimage, $x * $ffontw[$y] + 11, 6, $x * $ffontw[$y] + 11 + 10, 15, $fillcolor);
-
-  												imagettftext($legendimage, $fontsize, 0, $x * $ffontw[$y] + 30, 16, $black, $fontpath . $font, $label);
-  												imagettftext($legendimage, $fontsize, 0, $x * $ffontw[$y] + 29, 15, $fontc, $fontpath . $font, $label);
-  									} else
-  									{
-  												$t = $y - 1;
-  												$cc = $cc + $ffontw[$t] + 12;
-
-  												imagefilledrectangle($legendimage, $cc + 10, 5, $cc + 10 + 12, 16, $black);
-  												imagefilledrectangle($legendimage, $cc + 11, 6, $cc + 11 + 10, 15, $fillcolor);
-
-  												imagettftext($legendimage, $fontsize, 0, $cc + 11 + 12 + 5, 16, $black, $fontpath . $font, $label);
-  												imagettftext($legendimage, $fontsize, 0, $cc + 10 + 11 + 5, 15, $fontc, $fontpath . $font, $label);
-  									}
+  												imagettftext($image, $fontsize, 0, $cc + 11 + 12 + 5 + $legendstart, 16 +$legend_y, $black, $fontpath . $font, $label);
+  												imagettftext($image, $fontsize, 0, $cc + 10 + 11 + 5 + $legendstart, 15 +$legend_y, $fontc, $fontpath . $font, $label);
+  								
 
   									$y++;
   									$x++;
   						}
 
 
-  						$mapc = imagesx($image) * .5;
-  						$legc = imagesx($legendimage) * .5;
+  						
 
-  						$place = round($mapc) - round($legc) + 20;
-  						if ($this->debug)
-  									print "place $place mapc $mapc legc $legc\n";
-
-  						$black = imagecolorallocate($image, 0, 0, 0);
-  						$image = $this->legend_bg2($image, $black, $legendbg_h);
-  						imagecopymerge($image, $legendimage, $place, $legendy, 0, 0, imagesx($legendimage), imagesy($legendimage), 100);
-
+  						
   						return $image;
 
 
@@ -426,10 +386,10 @@
   									echo "Legendx $legendimagew legendy $legendimageh\n";
   						$legendimage = imagecreatetruecolor($legendimagew, $legendimageh);
 
-  						$black = imagecolorallocate($legendimage, 0, 0, 0);
-  						$white = imagecolorallocate($legendimage, 255, 255, 255);
+  						$black = $this->tools->color($legendimage, '000000');
+  						$white = $this->tools->color($legendimage, 'ffffff');
 
-  						$fill = imagecolorallocate($legendimage, 25, 25, 25);
+  						$fill = $this->tools->color($legendimage, 'FFFFEA');
 
   						imagefilledrectangle($legendimage, 0, 0, $legendimagew, $legendimageh, $fill);
 
@@ -450,8 +410,8 @@
   									
   												if ($this->debug)
   															print "lh $lh\n";
-  												list($r, $g, $bl) = $this->tools->getRGB($legendcolors[$x]);
-  												$fillcolor = imagecolorallocate($image, $r, $g, $bl);
+  												$fillcolor = $this->tools->color($legendimage,$legendcolors[$x]);
+  												
 
 
   												imagefilledrectangle($legendimage, 5, $lh, 12, $lh - 8, $fillcolor);
@@ -480,7 +440,7 @@
   						{
   									$side = 3;
   						}
-  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$black = $this->tools->color($image, '000000');
   						$bg = imagecreatetruecolor($legendimagew, $legendimageh);
 
   						imagefilledrectangle($bg, 0, 0, $legendimagew, $legendimageh, $black);
@@ -515,7 +475,7 @@
   						$legendwhat = (isset($legendcfg['legend_what'])) ? $legendcfg['legend_what'] : '';
   						$legendwidth = (isset($legendcfg['legend_width'])) ? $legendcfg['legend_width'] : '520';
   						$legendbarheight = (isset($legendcfg['legend_bar_height'])) ? $legendcfg['legend_bar_height'] : '8';
-  						$legendy = (isset($legendcfg['legend_y'])) ? $legendcfg['legend_y'] : '40';
+  						$legend_y = (isset($legendcfg['legend_y'])) ? $legendcfg['legend_y'] : '40';
 
   						$legendbg_h = (isset($legendcfg['legendbg_h'])) ? $legendcfg['legendbg_h'] : '55';
 
@@ -529,16 +489,11 @@
   						$legendimagew = imagesx($image);
   						if ($this->debug)
   									echo "Legendx $legendimagew legendy $legendimageh text $w\n";
-  						$legendimage = imagecreatetruecolor($legendimagew, $legendimageh);
+  						
+  						$black = $this->tools->color($image, '000000');
+  						$white = $this->tools->color($image, 'FFFFFF');
 
-  						$black = imagecolorallocate($legendimage, 0, 0, 0);
-  						$white = imagecolorallocate($legendimage, 255, 255, 255);
-
-  						$fill = imagecolorallocate($legendimage, 25, 25, 25);
-
-  						imagefilledrectangle($legendimage, 0, 0, $legendimagew, $legendimageh, $fill);
-
-  						imagecolortransparent($legendimage, $fill);
+  						$image = $this->legend_bg2($image, $black, $legendbg_h);
 
 
   						$boxw = round($legendwidth / count($legendcolors));
@@ -561,18 +516,17 @@
   									$lw = $legendstart + ($boxw * $y);
 
 
-  									list($r, $g, $bl) = $this->tools->getRGB($color);
-  									$fillcolor = imagecolorallocate($image, $r, $g, $bl);
+  									$fillcolor = $this->tools->color($image,$color);
+  									
 
-
-  									imagefilledrectangle($legendimage, $lw, 3, $lw + $boxw, 3 + $legendbarheight, $fillcolor);
+  									imagefilledrectangle($image, $lw, $legend_y, $lw + $boxw, 3 + $legendbarheight + $legend_y, $fillcolor);
 
   									if ($legendlabels)
   									{
   												if ($key % $steps == '0')
   												{
-  															imagettftext($legendimage, $fontsize, 0, $lw + $labels_x, $legendbarheight + 18, $black, $fontpath . $font, $labels[$i]);
-  															imagettftext($legendimage, $fontsize, 0, $lw + $labels_x, $legendbarheight + 17, $white, $fontpath . $font, $labels[$i]);
+  															imagettftext($image, $fontsize, 0, $lw + $labels_x, $legend_y + $legendbarheight + 18, $black, $fontpath . $font, $labels[$i]);
+  															imagettftext($image, $fontsize, 0, $lw + $labels_x, $legend_y + $legendbarheight + 17, $white, $fontpath . $font, $labels[$i]);
   															$i++;
   												}
   									}
@@ -581,10 +535,10 @@
   									$x++;
   						}
 
-  						imagerectangle($legendimage, $legendstart, 3, $lw + $boxw, 3 + $legendbarheight, $black);
+  						imagerectangle($image, $legendstart, $legend_y, $lw + $boxw, $legend_y + 3 + $legendbarheight, $black);
 
-  						imagettftext($legendimage, $fontsize, 0, $lw + $boxw + 2, 13, $black, $fontpath . $font, $legendwhat);
-  						imagettftext($legendimage, $fontsize, 0, $lw + $boxw + 3, 12, $white, $fontpath . $font, $legendwhat);
+  						imagettftext($image, $fontsize, 0, $lw + $boxw + 2, $legend_y + 13, $black, $fontpath . $font, $legendwhat);
+  						imagettftext($image, $fontsize, 0, $lw + $boxw + 3, $legend_y + 12, $white, $fontpath . $font, $legendwhat);
 
   						$mapc = imagesx($image) * .5;
   						$legc = imagesx($legendimage) * .5;
@@ -593,9 +547,9 @@
   						if ($this->debug)
   									print "place $place mapc $mapc legc $legc\n";
 
-  						$black = imagecolorallocate($image, 0, 0, 0);
-  						$image = $this->legend_bg2($image, $black, $legendbg_h);
-  						imagecopymerge($image, $legendimage, $place, $legendy, 0, 0, $legendimagew, $legendimageh, 100);
+  						
+  						
+  						//imagecopymerge($image, $legendimage, $place, $legendy, 0, 0, $legendimagew, $legendimageh, 100);
 
   						return $image;
 
