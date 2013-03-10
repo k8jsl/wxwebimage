@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->3/6/2013 19:48:41<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/10/2013 11:54:05<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -16,7 +16,7 @@
   {
 
   			var $distance = '';
-            var $version = '2.04 3/6/2013 19:47:35';
+            var $version = '2.05';
 
 
   			function __construct($debug, $form, $conf, $tools, $database, $mysql)
@@ -70,7 +70,7 @@
   						}
 
 
-  						$plots = Plotter::_distance_loop($gicaos);
+  						$plots = self::_distance_loop($gicaos);
 
 
   						foreach ($plots as $plot)
@@ -79,21 +79,21 @@
   									list($place, $state, $px, $py) = explode(",", $plot);
 
 
-  									$bounding = Plotter::_bounding_box($image, $px, $py);
+  									$bounding = self::_bounding_box($image, $px, $py);
 
   									if ($bounding == '1')
   									{
 
   												if (strtolower($markertype) == 'square')
   												{
-  															$image = Plotter::_square($image, $px, $py);
+  															$image = self::_square($image, $px, $py);
   												} elseif (strtolower($markertype) == 'ellipse')
   												{
-  															$image = Plotter::_ellipse($image, $px, $py);
+  															$image = self::_ellipse($image, $px, $py);
   												}
-  												$image = Plotter::_square($image, $px, $py);
+  												$image = self::_square($image, $px, $py);
 
-  												$image = Plotter::plotcity($image, $px, $py, ucwords(strtolower($place)));
+  												$image = self::plotcity($image, $px, $py, ucwords(strtolower($place)));
 
 
   									}
@@ -121,7 +121,7 @@
 
   												list($px, $py) = $point;
 
-  												$d = Plotter::_do_distance($xx, $yy, $px, $py);
+  												$d = self::_do_distance($xx, $yy, $px, $py);
 
   												if ($d < $this->distance)
   												{
@@ -207,9 +207,9 @@
 
   						list($type, $w, $h, $color) = explode("|", $this->conf['City Settings']['marker']);
 
-  						list($r, $g, $b) = $this->tools->getRGB($color);
-  						$iconcolor = imagecolorallocate($image, $r, $g, $b);
-  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$iconcolor = $this->tools->color($image,$color);
+  						
+  						$black = $this->tools->color($image, '000000');
 
 
   						imagefilledrectangle($image, $x - ($w * .5), $y - ($h * .5), $x + ($w * .5), $y + ($h * .5), $iconcolor);
@@ -225,9 +225,9 @@
 
   						list($type, $w, $h, $color) = explode("|", $this->conf['City Settings']['marker']);
 
-  						list($r, $g, $b) = $this->tools->getRGB($color);
-  						$iconcolor = imagecolorallocate($image, $r, $g, $b);
-  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$iconcolor = $this->tools->color($image,$color);
+  						
+  						$black = $this->tools->color($image, '000000');
 
   						imagefilledellipse($image, $px, $py, $w, $h, $iconcolor);
   						imageellipse($image, $px, $py, $w, $h, $black);

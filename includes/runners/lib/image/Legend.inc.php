@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->2/24/2013 17:39:47<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/10/2013 12:09:05<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -15,7 +15,7 @@
 
   class Legend
   {
-  			var $VERSION = "WxWeb Image Legend.php 3.55<br />";
+  			var $VERSION = "WxWeb Image Legend.php 3.56<br />";
 
   			function __construct($debug, $form, $conf, $tools)
   			{
@@ -76,7 +76,7 @@
   						$legendcolorsb = (isset($legendcfg['legend_colorsb'])) ? $legendcfg['legend_colorsb'] : '';
   						$legendlabelsb = (isset($legendcfg['legend_labelsb'])) ? $legendcfg['legend_labelsb'] : '';
 
-  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$black = $this->tools->color($image,'000000');
 
 
   						/**
@@ -129,7 +129,7 @@
 
   						$legendimage = imagecreatetruecolor($legendw, 45);
 
-  						$black = imagecolorallocate($legendimage, 0, 0, 0);
+  						$black = $this->tools->color($legendimage, '000000');
 
 
   						$fill = imagecolorallocate($legendimage, 25, 25, 25);
@@ -138,8 +138,8 @@
 
   						imagecolortransparent($legendimage, $fill);
 
-  						list($r, $g, $b) = $this->tools->getRGB($fontcolor);
-  						$fontc = imagecolorallocate($legendimage, $r, $g, $b);
+  						$fontc = $this->tools->color($image,$fontcolor);
+  						
   						error_reporting(0);
 
   						/** BEGIN LEGEND TOP **/
@@ -154,8 +154,8 @@
 
   									$ffontw[$y] = $fontw + 10;
 
-  									list($r, $g, $bl) = $this->tools->getRGB($legendcolorsa[$x]);
-  									$fillcolor = imagecolorallocate($legendimage, $r, $g, $bl);
+  									$fillcolor = $this->tools->color($legendimage,$legendcolorsa[$x]);
+  									
 
   									
 
@@ -192,8 +192,7 @@
                                     
                                     
 
-  									list($r, $g, $bl) = $this->tools->getRGB($legendcolorsb[$x]);
-  									$fillcolor = imagecolorallocate($legendimage, $r, $g, $bl);
+  									$fillcolor = $this->tools->color($legendimage,$legendcolorsb[$x]);
 
   													
   												if (!empty($label))
@@ -303,18 +302,17 @@
 
   						$legendimage = imagecreatetruecolor($legendw, 45);
 
-  						$black = imagecolorallocate($legendimage, 0, 0, 0);
+  						$black = $this->tools->color($legendimage, '000000');
 
 
-  						$fill = imagecolorallocate($legendimage, 25, 25, 25);
+  						$fill = $this->tools->color($legendimage, 'FFFFEA');
 
   						imagefilledrectangle($legendimage, 0, 0, imagesx($legendimage), imagesy($legendimage), $fill);
 
   						imagecolortransparent($legendimage, $fill);
 
-  						list($r, $g, $b) = $this->tools->getRGB($fontcolor);
-  						$fontc = imagecolorallocate($legendimage, $r, $g, $b);
-  						//error_reporting(0);
+  						$fontc = $this->tools->color($legendimage,$fontcolor);
+  						
 
   						/** BEGIN LEGEND TOP **/
 
@@ -327,8 +325,8 @@
 
   									$ffontw[$y] = $afontw + 10;
 
-  									list($r, $g, $bl) = $this->tools->getRGB($legendcolors[$x]);
-  									$fillcolor = imagecolorallocate($legendimage, $r, $g, $bl);
+  									$fillcolor = $this->tools->color($legendimage,$legendcolors[$x]);
+  									
 
   									if ($x == 0)
   									{
@@ -363,7 +361,7 @@
   						if ($this->debug)
   									print "place $place mapc $mapc legc $legc\n";
 
-  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$black = $this->tools->color($image, '000000');
   						$image = $this->legend_bg2($image, $black, $legendbg_h);
   						imagecopymerge($image, $legendimage, $place, $legendy, 0, 0, imagesx($legendimage), imagesy($legendimage), 100);
 
@@ -426,10 +424,10 @@
   									echo "Legendx $legendimagew legendy $legendimageh\n";
   						$legendimage = imagecreatetruecolor($legendimagew, $legendimageh);
 
-  						$black = imagecolorallocate($legendimage, 0, 0, 0);
-  						$white = imagecolorallocate($legendimage, 255, 255, 255);
+  						$black = $this->tools->color($legendimage, '000000');
+  						$white = $this->tools->color($legendimage, 'ffffff');
 
-  						$fill = imagecolorallocate($legendimage, 25, 25, 25);
+  						$fill = $this->tools->color($legendimage, 'FFFFEA');
 
   						imagefilledrectangle($legendimage, 0, 0, $legendimagew, $legendimageh, $fill);
 
@@ -450,8 +448,8 @@
   									
   												if ($this->debug)
   															print "lh $lh\n";
-  												list($r, $g, $bl) = $this->tools->getRGB($legendcolors[$x]);
-  												$fillcolor = imagecolorallocate($image, $r, $g, $bl);
+  												$fillcolor = $this->tools->color($legendimage,$legendcolors[$x]);
+  												
 
 
   												imagefilledrectangle($legendimage, 5, $lh, 12, $lh - 8, $fillcolor);
@@ -480,7 +478,7 @@
   						{
   									$side = 3;
   						}
-  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$black = $this->tools->color($image, '000000');
   						$bg = imagecreatetruecolor($legendimagew, $legendimageh);
 
   						imagefilledrectangle($bg, 0, 0, $legendimagew, $legendimageh, $black);
@@ -531,10 +529,10 @@
   									echo "Legendx $legendimagew legendy $legendimageh text $w\n";
   						$legendimage = imagecreatetruecolor($legendimagew, $legendimageh);
 
-  						$black = imagecolorallocate($legendimage, 0, 0, 0);
-  						$white = imagecolorallocate($legendimage, 255, 255, 255);
+  						$black = $this->tools->color($legendimage, '000000');
+  						$white = $this->tools->color($legendimage, 'FFFFFF');
 
-  						$fill = imagecolorallocate($legendimage, 25, 25, 25);
+  						$fill = $this->tools->color($legendimage, 'FFFFEA');
 
   						imagefilledrectangle($legendimage, 0, 0, $legendimagew, $legendimageh, $fill);
 
@@ -561,9 +559,8 @@
   									$lw = $legendstart + ($boxw * $y);
 
 
-  									list($r, $g, $bl) = $this->tools->getRGB($color);
-  									$fillcolor = imagecolorallocate($image, $r, $g, $bl);
-
+  									$fillcolor = $this->tools->color($legendimage,$color);
+  									
 
   									imagefilledrectangle($legendimage, $lw, 3, $lw + $boxw, 3 + $legendbarheight, $fillcolor);
 
@@ -593,7 +590,7 @@
   						if ($this->debug)
   									print "place $place mapc $mapc legc $legc\n";
 
-  						$black = imagecolorallocate($image, 0, 0, 0);
+  						$black = $this->tools->color($image, '000000');
   						$image = $this->legend_bg2($image, $black, $legendbg_h);
   						imagecopymerge($image, $legendimage, $place, $legendy, 0, 0, $legendimagew, $legendimageh, 100);
 

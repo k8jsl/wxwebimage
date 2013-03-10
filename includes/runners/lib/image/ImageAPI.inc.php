@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->1/8/2013 18:30:22<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/10/2013 11:49:24<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -193,8 +193,8 @@
   			{
 
   						$trans = imagecreatetruecolor(imagesx($image), imagesx($image));
-  						list($r, $g, $b) = $this->tools->getRGB('FFFFFA');
-  						$offwhite = imagecolorallocate($trans, $r, $g, $b);
+  						$offwhite = $this->tools->color($image,'FFFFFA');
+  						
 
   						imagefilledrectangle($trans, 0, 0, imagesx($image), imagesy($image), $offwhite);
   						imagecolortransparent($trans, $offwhite);
