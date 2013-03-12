@@ -1,13 +1,12 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->3/12/2013 13:02:29<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/12/2013 13:17:13<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
    * @name Legend.inc.php
-   * @version 3
-   * @revision .54
+   * 
    * @license http://creativecommons.org/licenses/by-sa/3.0/us/
    * 
    * 
