@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->3/12/2013 13:17:13<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/12/2013 17:04:50<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -539,17 +539,7 @@
   						imagettftext($image, $fontsize, 0, $lw + $boxw + 2, $legend_y + 13, $black, $fontpath . $font, $legendwhat);
   						imagettftext($image, $fontsize, 0, $lw + $boxw + 3, $legend_y + 12, $white, $fontpath . $font, $legendwhat);
 
-  						$mapc = imagesx($image) * .5;
-  						$legc = imagesx($legendimage) * .5;
-
-  						$place = round($mapc) - round($legc);
-  						if ($this->debug)
-  									print "place $place mapc $mapc legc $legc\n";
-
-  						
-  						
-  						//imagecopymerge($image, $legendimage, $place, $legendy, 0, 0, $legendimagew, $legendimageh, 100);
-
+  					
   						return $image;
 
 
