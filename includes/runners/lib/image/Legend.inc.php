@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->3/12/2013 17:04:50<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/14/2013 10:02:38<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -267,23 +267,21 @@
   						 */
                          if ($this->debug) echo "Count:: " . count($legendlabels);
   						$atotal = count($legendlabels);
-  						$afontw = 0;
+  						$a = $legendw = 0;
   						foreach ($legendlabels as $label)
   						{
-  									list($w, $h) = $this->tools->_text_width_height($label, $fontpath, $font, $fontsize, '0');
-  									if ($w > $afontw)
-  									{
-  												$afontw = $w;
-  									}
+								    list($w, $h) = $this->tools->_text_width_height($label, $fontpath, $font, $fontsize, '0');
+                                    $labelw[$a] = $w;
+                                    $legendw = $legendw + $labelw[$a];
+                                    $a++;
   						}
   						$ablocksw = ($atotal * 10) * 3;
-  						$afontwt = $atotal * $afontw;
-  						$legendw = $afontwt + $ablocksw;
+  						$legendw = $legendw + $ablocksw;
                         $legendcenter = round($legendw * .5);
                         $legendstart = round(imagesx($image) * .5) - $legendcenter;
 
   						if ($this->debug)
-  									echo "top legend width $legendw $afontw $legendstart\n";
+  									echo "\ntop legend width $legendw $legendstart $legendcenter\n";
 
 
  		
@@ -302,24 +300,29 @@
   						{
 
 
-  									$ffontw[$y] = $afontw + 10;
+  										$ffontw[$y] = $labelw[$y] + 10;
 
   									$fillcolor = $this->tools->color($image,$legendcolors[$x]);
   									
 
-  							
+  									
+
   												
-  												$cc = $cc + $ffontw[$y] + 12;
+  												
+  												if (!empty($label))
+  												{
+  															imagefilledrectangle($image, $cc + 10 + $legendstart, 5 + $legend_y, $cc + $legendstart + 10 + 12, 16 + $legend_y, $black);
+  															imagefilledrectangle($image, $cc + 11 + $legendstart, 6 + $legend_y, $cc + $legendstart + 11 + 10, 15 + $legend_y, $fillcolor);
 
-  												imagefilledrectangle($image, $cc + 10 + $legendstart, 5 +$legend_y, $cc + 10 + 12 + $legendstart, 16 +$legend_y, $black);
-  												imagefilledrectangle($image, $cc + 11 + $legendstart , 6 +$legend_y, $cc + 11 + 10 + $legendstart, 15 +$legend_y, $fillcolor);
-
-  												imagettftext($image, $fontsize, 0, $cc + 11 + 12 + 5 + $legendstart, 16 +$legend_y, $black, $fontpath . $font, $label);
-  												imagettftext($image, $fontsize, 0, $cc + 10 + 11 + 5 + $legendstart, 15 +$legend_y, $fontc, $fontpath . $font, $label);
-  								
+  															imagettftext($image, $fontsize, 0, $cc + $legendstart + 11 + 12 + 5, 16 + $legend_y, $black, $fontpath . $font, $label);
+  															imagettftext($image, $fontsize, 0, $cc + $legendstart + 10 + 11 + 5, 15 + $legend_y, $fontc, $fontpath . $font, $label);
+  												}
+  									
 
   									$y++;
   									$x++;
+                                    $t = $y - 1;
+                                    $cc = $cc + $ffontw[$t] + 12;
   						}
 
 
