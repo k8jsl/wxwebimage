@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->3/14/2013 10:02:38<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/14/2013 21:13:03<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -265,23 +265,24 @@
   						 * lets get the labels size
   						 * 
   						 */
-                         if ($this->debug) echo "Count:: " . count($legendlabels);
+                         if ($this->debug) echo "\nCount:: " . count($legendlabels)."\n";
   						$atotal = count($legendlabels);
   						$a = $legendw = 0;
   						foreach ($legendlabels as $label)
   						{
 								    list($w, $h) = $this->tools->_text_width_height($label, $fontpath, $font, $fontsize, '0');
                                     $labelw[$a] = $w;
-                                    $legendw = $legendw + $labelw[$a];
+                                    if($this->debug) print "label $label $w\n";
+                                    $legendw += $labelw[$a] + 10;
                                     $a++;
   						}
-  						$ablocksw = ($atotal * 10) * 3;
+  						$ablocksw = ($atotal * 10);
   						$legendw = $legendw + $ablocksw;
                         $legendcenter = round($legendw * .5);
                         $legendstart = round(imagesx($image) * .5) - $legendcenter;
 
   						if ($this->debug)
-  									echo "\ntop legend width $legendw $legendstart $legendcenter\n";
+  									echo "\ntop legend width $legendw Start: $legendstart Center: $legendcenter\n";
 
 
  		
