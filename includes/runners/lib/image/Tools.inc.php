@@ -1,7 +1,7 @@
 <?php
 
 		/**
-		 * // <!-- phpDesigner :: Timestamp -->3/9/2013 19:59:51<!-- /Timestamp -->
+		 * // <!-- phpDesigner :: Timestamp -->3/25/2013 12:35:29<!-- /Timestamp -->
 		 * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
 		 * @copyright 2012
 		 * @package WxWebApi
@@ -484,11 +484,11 @@
 		         foreach ($overlays as $overlay)
 		         {
 		            list($over, $trans) = explode(":", $overlay);
-		            $tover = preg_replace('/\{(\w+)\}/e', "\$this->conf['Image Settings']['$1']", $over);
+		            //$tover = preg_replace('/\{(\w+)\}/e', "\$this->conf['Image Settings']['$1']", $over);
 		            if (isset($this->form['map']))
 		            {
 		               $bover = preg_replace('/\{(\w+)\}/e', "\$this->form['$1']", $over);
-		               if (preg_match('/[\w\d]+_overlay/', $bover) || preg_match('/[\w\d]+_linesonly/', $bover) || preg_match('/[\w\d]+_counties/', $bover))
+		               if (preg_match('/[\w\d]+_overlay/', $bover) || preg_match('/[\w\d]+_linesonly/', $bover) || preg_match('/[\w\d]+_countylines/', $bover))
 		               {
 		                  $tover = $bover;
 
@@ -525,11 +525,11 @@
 		         foreach ($underlays as $underlay)
 		         {
 		            list($under, $trans) = explode(":", $underlay);
-		            $tunder = preg_replace('/\{(\w+)\}/e', "\$this->conf['Image Settings']['$1']", $under);
+		           // $tunder = preg_replace('/\{(\w+)\}/e', "\$this->conf['Image Settings']['$1']", $under);
 		            if (isset($this->form['map']))
 		            {
 		               $bunder = preg_replace('/\{(\w+)\}/e', "\$this->form['$1']", $under);
-		               if (preg_match('/[\w\d]+_overlay/', $bover) || preg_match('/[\w\d]+_linesonly/', $bover) || preg_match('/[\w\d]+_counties/', $bover))
+		               if (preg_match('/[\w\d]+_overlay/', $bunder) || preg_match('/[\w\d]+_linesonly/', $bunder) || preg_match('/[\w\d]+_countylines/', $bunder) || preg_match('/[\w\d]+_interstates/', $bunder))
 		               {
 		                  $tunder = $bunder;
 
@@ -555,7 +555,8 @@
 		      $filepath = (!empty($this->conf['Image Settings']['save_path'])) ? $this->conf['Image Settings']['save_path'] : IMAGESAVEPATH;
 		      $fileurl = (!empty($this->conf['Image Settings']['save_url'])) ? $this->conf['Image Settings']['save_url'] : IMAGESAVEURL;
 		      $savetype = (!empty($this->conf['Image Settings']['save_type'])) ? $this->conf['Image Settings']['save_type'] : IMAGESAVETYPE;
-
+                $filepath = preg_replace('/\{(.+?)\}/e', "\$this->variable_replace(\"$1\");", $filepath);
+                $fileurl = preg_replace('/\{(.+?)\}/e', "\$this->variable_replace(\"$1\");", $fileurl);
 
 		      $savename = (!empty($this->form['name'])) ? $this->form['name'] : $name;
 
@@ -712,6 +713,14 @@
 		      return $new;
 
 		   }
+           
+           function variable_replace($var)
+  			{
+  						$result = (isset($this->form[$var])) ? $this->form[$var] : $this->$var;
+                        if ($this->debug) echo "In var replace $result\n";
+
+  						return $result;
+  			}
 
 
 		} //end class
