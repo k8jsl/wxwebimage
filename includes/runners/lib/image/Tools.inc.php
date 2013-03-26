@@ -1,7 +1,7 @@
 <?php
 
 		/**
-		 * // <!-- phpDesigner :: Timestamp -->3/25/2013 12:35:29<!-- /Timestamp -->
+		 * // <!-- phpDesigner :: Timestamp -->3/25/2013 14:59:04<!-- /Timestamp -->
 		 * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
 		 * @copyright 2012
 		 * @package WxWebApi
@@ -484,7 +484,7 @@
 		         foreach ($overlays as $overlay)
 		         {
 		            list($over, $trans) = explode(":", $overlay);
-		            //$tover = preg_replace('/\{(\w+)\}/e', "\$this->conf['Image Settings']['$1']", $over);
+		            //
 		            if (isset($this->form['map']))
 		            {
 		               $bover = preg_replace('/\{(\w+)\}/e', "\$this->form['$1']", $over);
@@ -494,6 +494,9 @@
 
 		               }
 		            }
+                    else{
+                        $tover = preg_replace('/\{(\w+)\}/e', "\$this->conf['Image Settings']['$1']", $over);
+                    }
 		            $timage = $this->load_image($tover);
 
 		            imagecopymerge($image, $timage, 0, 0, 0, 0, imagesx($timage), imagesy($timage), $trans);
@@ -525,7 +528,7 @@
 		         foreach ($underlays as $underlay)
 		         {
 		            list($under, $trans) = explode(":", $underlay);
-		           // $tunder = preg_replace('/\{(\w+)\}/e', "\$this->conf['Image Settings']['$1']", $under);
+		           // 
 		            if (isset($this->form['map']))
 		            {
 		               $bunder = preg_replace('/\{(\w+)\}/e', "\$this->form['$1']", $under);
@@ -535,6 +538,9 @@
 
 		               }
 		            }
+                    else{
+                        $tunder = preg_replace('/\{(\w+)\}/e', "\$this->conf['Image Settings']['$1']", $under);
+                    }
 		            $timage = $this->load_image($tunder);
 
 		            imagecopymerge($image, $timage, 0, 0, 0, 0, imagesx($timage), imagesy($timage), $trans);
@@ -579,7 +585,7 @@
 		         echo "<br />Savepath: $filepath<br />Save url $fileurl<br />";
 		      }
 
-
+            if ($this->debug) continue;
 		      if (file_exists($filepath . "/" . $savename . "." . $savetype) && time() - @filectime($filepath . "/" . $savename . "." . $savetype) <
 		         $saveage && !$nocache)
 		      {
