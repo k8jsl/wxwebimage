@@ -1,7 +1,7 @@
 <?php
 
 		/**
-		 * // <!-- phpDesigner :: Timestamp -->3/25/2013 14:59:04<!-- /Timestamp -->
+		 * // <!-- phpDesigner :: Timestamp -->3/25/2013 22:57:46<!-- /Timestamp -->
 		 * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
 		 * @copyright 2012
 		 * @package WxWebApi
@@ -48,7 +48,7 @@
 		      $linecolor = (!empty($this->conf['Title Settings'][$size . 'linecolor'])) ? $this->conf['Title Settings'][$size . 'linecolor'] :
 		         'FFFFFF';
 		      // 1 means draw
-		      $bardraw = (isset($this->conf['Title Settings'][$size . 'barimgdraw'])) ? $this->conf['Title Settings'][$size . 'barimgdraw'] :
+		      $bardraw = (!empty($this->conf['Title Settings'][$size . 'barimgdraw'])) ? $this->conf['Title Settings'][$size . 'barimgdraw'] :
 		         '1';
 		      $barimg = (!empty($this->conf['Title Settings'][$size . 'barimg'])) ? $this->conf['Title Settings'][$size . 'barimg'] : '';
 		      $barimgpath = (!empty($this->conf['Title Settings'][$size . 'barimgpath'])) ? $this->conf['Title Settings'][$size . 'barimgpath'] :
@@ -218,7 +218,7 @@
 		      $dshex = self::color($image, $chest['dscolor']);
 
 
-		      $chest['ttfpath'] = (isset($chest['ttfpath'])) ? $chest['ttfpath'] : TTFPATH;
+		      $chest['ttfpath'] = (!empty($chest['ttfpath'])) ? $chest['ttfpath'] : TTFPATH;
 
 
 		      $sy = imagesy($image);
@@ -484,8 +484,8 @@
 		         foreach ($overlays as $overlay)
 		         {
 		            list($over, $trans) = explode(":", $overlay);
-		            //
-		            if (isset($this->form['map']))
+		            
+		            if (!empty($this->form['map']))
 		            {
 		               $bover = preg_replace('/\{(\w+)\}/e', "\$this->form['$1']", $over);
 		               if (preg_match('/[\w\d]+_overlay/', $bover) || preg_match('/[\w\d]+_linesonly/', $bover) || preg_match('/[\w\d]+_countylines/', $bover))
@@ -529,7 +529,7 @@
 		         {
 		            list($under, $trans) = explode(":", $underlay);
 		           // 
-		            if (isset($this->form['map']))
+		            if (!empty($this->form['map']))
 		            {
 		               $bunder = preg_replace('/\{(\w+)\}/e', "\$this->form['$1']", $under);
 		               if (preg_match('/[\w\d]+_overlay/', $bunder) || preg_match('/[\w\d]+_linesonly/', $bunder) || preg_match('/[\w\d]+_countylines/', $bunder) || preg_match('/[\w\d]+_interstates/', $bunder))
@@ -722,7 +722,7 @@
            
            function variable_replace($var)
   			{
-  						$result = (isset($this->form[$var])) ? $this->form[$var] : $this->$var;
+  						$result = (!empty($this->form[$var])) ? $this->form[$var] : $this->$var;
                         if ($this->debug) echo "In var replace $result\n";
 
   						return $result;

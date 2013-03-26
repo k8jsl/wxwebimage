@@ -1,7 +1,7 @@
 <?php
 
   /**
-   * // <!-- phpDesigner :: Timestamp -->3/10/2013 11:49:24<!-- /Timestamp -->
+   * // <!-- phpDesigner :: Timestamp -->3/25/2013 22:58:47<!-- /Timestamp -->
    * @author MichiganWxSystem/ByTheLakeWebDevelopment sales@michiganwxsystem.com
    * @copyright 2012
    * @package WxWebApi
@@ -84,7 +84,7 @@
   			function _load_map()
   			{
 
-  						$this->map = (!empty($this->form['map'])) ? $this->form['map'] : $this->conf['Image Settings']['map'];
+  						$this->map = (preg_match('/\w/',$this->form['map'])) ? $this->form['map'] : $this->conf['Image Settings']['map'];
 
 
   						if (!preg_match('/\w+/', $this->map))
@@ -92,7 +92,7 @@
   									echo "WxWeb Error: basemap not set<br />\n";
   									return 0;
   						}
-  						$this->blankmaps = (isset($this->conf['Image Settings']['blankmaps'])) ? $this->conf['Image Settings']['blankmaps'] : '';
+  						$this->blankmaps = (!empty($this->conf['Image Settings']['blankmaps'])) ? $this->conf['Image Settings']['blankmaps'] : '';
   						if (!preg_match('/\w+/', $this->blankmaps))
   						{
   									echo "WxWeb Error: blankmap path not set<br />\n";
@@ -249,7 +249,7 @@
   			{
 
   						$size = imagesx($image);
-                        if (isset($this->credit))
+                        if (!empty($this->credit))
                         {
                             $credit = $this->credit;
                         }
@@ -258,7 +258,7 @@
   						    $credit = (!empty($this->conf['Title Settings']['credittext'])) ? $this->conf['Title Settings']['credittext'] : $this->credit;
                         }
                         
-                         if (isset($this->title))
+                         if (!empty($this->title))
                         {
                             $title = $this->title;
                         }
@@ -330,7 +330,7 @@
 
   			function variable_replace($var)
   			{
-  						$result = (isset($this->form[$var])) ? $this->form[$var] : $this->{$var};
+  						$result = (!empty($this->form[$var])) ? $this->form[$var] : $this->{$var};
 
   						return $result;
   			}
